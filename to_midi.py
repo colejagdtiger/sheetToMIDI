@@ -33,9 +33,60 @@ class Midi:
         # inits tempo
         self.set_tempo(self.time, self.tempo)
 
+    def __repr__(self):
+        tmp = zip(self.notes, self.duration)
+        return f'{tmp}'
+
     def set_tempo(self, time, tempo):
         ''' sets tempo of track at a given time given the time and the tempo '''
         self.midi.addTempo(self.track, time, tempo)
+
+    def set_track(self, track):
+        ''' given new track (int) switch to that track '''
+        self.track = track
+    
+    def note_to_midi(self, string_notes):
+        ''' converts notes ie G3, Ab5, f#2 (supports octives 0 to 9 inclusive)
+        to notes interperated by this midi class '''
+
+        # key for increment number
+        key = {
+            'c': 0,
+            'c#': 1,
+            'db': 1,
+            'd': 2,
+            'd#': 3,
+            'eb': 3,
+            'e': 4,
+            'fb': 4,
+            'e#': 5,
+            'f': 5,
+            'f#': 6,
+            'gb': 6,
+            'g': 7,
+            'g#': 8,
+            'ab': 8,
+            'a': 9,
+            'a#': 10,
+            'bb': 10,
+            'b': 11,
+            'cb': 11,
+            'b#': 0
+        }
+        
+        if isinstance(string_notes, str):
+            string_notes = string_notes.strip().lower()
+            return increment + (12 * int(string_notes[-1:]) + key[string_notes[:-1]])
+
+        return_list = []
+        for note in string_notes:
+            if note != 'r':
+                note = note.strip().lower()
+                return_list.append(12 * int(note[-1:]) + key[note[:-1]])
+            else:
+                return_list.append('r')
+
+        return return_list
 
     def push_notes(self, new_notes, duration):
         ''' 
@@ -50,24 +101,24 @@ class Midi:
             self.notes.append(new_notes)
             self.duration.append(duration)
 
-    def different_track(self, track):
-        ''' given new track (int) switch to that track '''
-        self.track = track
-
-    def write_mid(self, name):
-        '''
-        given mid output name (.mid extension not needed), 
-        the notes of all the tracks will be encoded in a mid file 
-        '''
+    def encode_track(self):
+        ''' encodes the entirety of a single track '''
         for note, duration in zip(self.notes, self.duration):
             if isinstance(note, tuple):
                 for single_note, single_duraction in zip(note, duration):
                     self.midi.addNote(self.track, self.channel, single_note, self.time, single_duraction, self.volume)
             else:
-                self.midi.addNote(self.track, self.channel, note, self.time, duration, self.volume)
+                if note != 'r':
+                    self.midi.addNote(self.track, self.channel, note, self.time, duration, self.volume)
 
             # calculates new time
             self.time += duration
+
+    def output_mid(self, name):
+        '''
+        given mid output name (.mid extension not needed), 
+        the midi will be written out
+        '''
 
         # format output name
         name = name.strip()
