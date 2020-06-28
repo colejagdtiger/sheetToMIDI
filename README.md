@@ -13,7 +13,7 @@ svg or png to a midi converter
 
 
 
-## Test
+## Credit
 
 Ran tests with https://musescore.com/httpswww_youtube_comchannelucfmylbjglkqz-w-2osdrlpw/scores/5894487
 
