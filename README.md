@@ -9,7 +9,7 @@ svg or png to a midi converter
 ## Requires
 
 * [midiutil](https://pypi.org/project/MIDIUtil/)
-* Pillow?
+* 
 
 
 

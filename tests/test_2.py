@@ -3,7 +3,7 @@ from Midi_interface.Midi import Midi
 def main():
     mid = Midi(1, 170)
     
-    mid.set_instrument(25)
+    mid.set_instrument(100)
 
     parts = [("F5", "G#5", "c5", "D#5"),]*3 + [("A#5", "G5", "c5", "D#5"),] * 2 + [("A#5", "G5", "c6", "D#5"),] * 6
     dur_parts = [1.5, 1.5, 1, 1.5, 1.5] + [1.5] * 6

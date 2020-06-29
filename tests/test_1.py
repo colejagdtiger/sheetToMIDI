@@ -1,4 +1,4 @@
-from Midi import Midi
+from Midi_interface.Midi import Midi
 
 def main():
     # sets 1 track and tempo as 115 bpm
