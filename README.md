@@ -10,7 +10,7 @@ svg to a midi converter
 
 * [midiutil](https://pypi.org/project/MIDIUtil/)
 * [Midi_interface](https://github.com/Zeyu-Li/Midi_interface)
-* [cairosvg](https://cairosvg.org/)
+* [svglib](https://pypi.org/project/svglib/)
 
 
 

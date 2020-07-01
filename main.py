@@ -11,10 +11,21 @@ from Midi_interface.Midi import Midi
 # XML decoder for SVG
 import xml.etree.ElementTree as ET
 
+# rasterize svgs
+from svglib.svglib import svg2rlg
+from reportlab.graphics import renderPM
+
 
 def main():
 
-    tree = ET.parse('input/score_1.svg')
+    file_name = 'score_1'
+
+    # format input string
+    file_name = file_name.strip()
+    if file_name[-4:] == '.svg':
+        file_name = file_name[:-4]
+
+    tree = ET.parse(f'input/{file_name}.svg')
 
     remove_classes = ['Text', 'SlurSegment', 'BarLine', 'Harmony']
 
@@ -56,7 +67,10 @@ def main():
     # print(ET.tostring(main))
     
     # write to file
-    ET.ElementTree(main).write("output/score_1.svg")
+    ET.ElementTree(main).write(f'tmp/{file_name}.svg')
+
+    drawing = svg2rlg(f'tmp/{file_name}.svg')
+    renderPM.drawToFile(drawing, f'tmp/{file_name}.png', fmt="PNG")
 
 if __name__ == "__main__":
     main()
