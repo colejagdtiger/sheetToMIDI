@@ -16,9 +16,8 @@ from svglib.svglib import svg2rlg
 from reportlab.graphics import renderPM
 
 
-def main():
-
-    file_name = 'score_1'
+def svg_to_img(file_name):
+    ''' converts a specified svg file to a simplified png file '''
 
     # format input string
     file_name = file_name.strip()
@@ -71,6 +70,37 @@ def main():
 
     drawing = svg2rlg(f'tmp/{file_name}.svg')
     renderPM.drawToFile(drawing, f'tmp/{file_name}.png', fmt="PNG")
+
+
+def main():
+    # file name here
+    svg_file = 'score_1'
+
+    # converts svg to png
+    svg_to_img(svg_file)
+
+    # TODO: image recognition
+    pass
+
+    # TODO: Output midi
+    # sets track and tempo
+    # mid = Midi(1, 170)
+    
+    # mid.set_instrument(100)
+
+    # parts = [("F5", "G#5", "c5", "D#5"),]*3 + [("A#5", "G5", "c5", "D#5"),] * 2 + [("A#5", "G5", "c6", "D#5"),] * 6
+    # dur_parts = [1.5, 1.5, 1, 1.5, 1.5] + [1.5] * 6
+
+    # new_dur = []
+    # for part in dur_parts:
+    #     new_dur.append(tuple([part] * 4))
+
+    # notes = mid.notes_to_midi(parts)
+
+    # mid.push_notes(notes, new_dur)
+
+    # mid.output_mid("test3")
+
 
 if __name__ == "__main__":
     main()

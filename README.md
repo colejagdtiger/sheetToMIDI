@@ -1,6 +1,6 @@
 # Sheet Music To MIDI
 
-A Python project to convert sheet music to MIDI
+A Python project to convert sheet music to MIDI. 
 
 svg to a midi converter
 
@@ -9,7 +9,7 @@ svg to a midi converter
 ## Requires
 
 * [midiutil](https://pypi.org/project/MIDIUtil/)
-* [Midi_interface](https://github.com/Zeyu-Li/Midi_interface)
+* [Midi_interface](https://github.com/Zeyu-Li/Midi_interface) -> Dependencies include [MIDIUtil](https://pypi.org/project/MIDIUtil/)
 * [svglib](https://pypi.org/project/svglib/)
 
 
