@@ -11,6 +11,8 @@ from Midi_interface.Midi import Midi
 # XML decoder for SVG
 import xml.etree.ElementTree as ET
 
+# pretty print
+from xml.dom import minidom
 
 def main():
 
@@ -22,13 +24,38 @@ def main():
     # additional_classes = ['Stem', 'TimeSig']
     # remove_classes += additional_classes
 
+    # get height + width
+    width = tree.getroot().get('width')
+    height = tree.getroot().get('height')
+
+    # crafting a new xml file
+    main = ET.Element('svg')
+    # setting height and width
+    main.set('width', width)
+    main.set('height', height)
+    main.set('xmlns', 'http://www.w3.org/2000/svg')
+
 
     # from svg to paths of notes and others
     for path in tree.getroot():
         className = path.get('class')
         if className not in remove_classes:
-            print(f'{className}: {path.get("d")}\n')
 
+            # new path
+            new_path = ET.SubElement(main, 'path')
+            new_path.set('fill', "none")
+            new_path.set('stroke', "#000")
+            if className != 'Note':
+                new_path.set('stroke-width', ".36")
+            
+            # sets path
+            new_path.set('d', f'{path.get("d")}')
+
+    # print final product
+    # print(ET.tostring(main))
+    
+    # write to file
+    ET.ElementTree(main).write("output/score_1.svg")
 
 if __name__ == "__main__":
     main()
