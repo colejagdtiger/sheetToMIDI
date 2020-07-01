@@ -11,8 +11,6 @@ from Midi_interface.Midi import Midi
 # XML decoder for SVG
 import xml.etree.ElementTree as ET
 
-# pretty print
-from xml.dom import minidom
 
 def main():
 
@@ -36,17 +34,20 @@ def main():
     main.set('xmlns', 'http://www.w3.org/2000/svg')
 
 
-    # from svg to paths of notes and others
+    # from svg to paths of notes and others while removing some unused paths
     for path in tree.getroot():
         className = path.get('class')
         if className not in remove_classes:
 
             # new path
             new_path = ET.SubElement(main, 'path')
-            new_path.set('fill', "none")
-            new_path.set('stroke', "#000")
-            if className != 'Note':
+            if className not in ['Note', 'Hook', 'Beam', 'Rest', 'NoteDot']:
                 new_path.set('stroke-width', ".36")
+                new_path.set('fill', "none")
+                new_path.set('stroke', "#000")
+
+            # show names for debuging purposes
+            new_path.set('class', className)
             
             # sets path
             new_path.set('d', f'{path.get("d")}')

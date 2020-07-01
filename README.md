@@ -2,14 +2,15 @@
 
 A Python project to convert sheet music to MIDI
 
-svg or png to a midi converter
+svg to a midi converter
 
 
 
 ## Requires
 
 * [midiutil](https://pypi.org/project/MIDIUtil/)
-* 
+* [Midi_interface](https://github.com/Zeyu-Li/Midi_interface)
+* [cairosvg](https://cairosvg.org/)
 
 
 
