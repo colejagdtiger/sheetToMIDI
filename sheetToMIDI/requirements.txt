@@ -1,2 +1,0 @@
-svglib==1.0.0
-MIDIUtil==1.2.1
