@@ -26,7 +26,7 @@ def svg_to_img(file_name):
 
     tree = ET.parse(f'input/{file_name}.svg')
 
-    remove_classes = ['Text', 'SlurSegment', 'BarLine', 'Harmony']
+    remove_classes = ['Text', 'SlurSegment', 'BarLine', 'Harmony', 'StaffLines']
 
     # additional classes (uncomment next two lines to be removed)
     # additional_classes = ['Stem', 'TimeSig']
@@ -66,7 +66,7 @@ def svg_to_img(file_name):
     # print(ET.tostring(main))
     
     # write to file
-    ET.ElementTree(main).write(f'tmp/{file_name}.svg')
+    ET.ElementTree(main).write(f'tmp/{file_name}_1.svg')
 
     drawing = svg2rlg(f'tmp/{file_name}.svg')
     renderPM.drawToFile(drawing, f'tmp/{file_name}.png', fmt="PNG")
@@ -85,7 +85,7 @@ def main():
     # TODO: Output midi
     # sets track and tempo
     # mid = Midi(1, 170)
-    
+
     # mid.set_instrument(100)
 
     # parts = [("F5", "G#5", "c5", "D#5"),]*3 + [("A#5", "G5", "c5", "D#5"),] * 2 + [("A#5", "G5", "c6", "D#5"),] * 6

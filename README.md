@@ -8,9 +8,16 @@ svg to a midi converter
 
 ## Requires
 
-* [midiutil](https://pypi.org/project/MIDIUtil/)
 * [Midi_interface](https://github.com/Zeyu-Li/Midi_interface) -> Dependencies include [MIDIUtil](https://pypi.org/project/MIDIUtil/)
 * [svglib](https://pypi.org/project/svglib/)
+
+
+
+\* for quick installation, use 
+
+```shell
+pip install requirements.txt
+```
 
 
 
