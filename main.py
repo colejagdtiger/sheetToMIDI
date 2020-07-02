@@ -51,7 +51,7 @@ def svg_to_img(file_name):
 
             # new path
             new_path = ET.SubElement(main, 'path')
-            if className not in ['Note', 'Hook', 'Beam', 'Rest', 'NoteDot']:
+            if className not in ['Note', 'Hook', 'Beam', 'Rest', 'NoteDot', 'Tempo']:
                 new_path.set('stroke-width', ".36")
                 new_path.set('fill', "none")
                 new_path.set('stroke', "#000")
@@ -79,15 +79,19 @@ def main():
     # converts svg to png
     svg_to_img(svg_file)
 
-    # TODO: image recognition
-    pass
-
-    # TODO: Output midi
+    # Output midi
     # sets track and tempo
+
+    # get tempo by text recognition (using openCV) on the BPM
+
+    # get number of tracks by getting a small sliver of the bar lines right beside the time signature
+    # and seeing the distance between the 5 bar lines
     # mid = Midi(1, 170)
 
+    # set random instrument
     # mid.set_instrument(100)
 
+    # image recognition, one pass for the pitch and one pass for the duration
     # parts = [("F5", "G#5", "c5", "D#5"),]*3 + [("A#5", "G5", "c5", "D#5"),] * 2 + [("A#5", "G5", "c6", "D#5"),] * 6
     # dur_parts = [1.5, 1.5, 1, 1.5, 1.5] + [1.5] * 6
 
