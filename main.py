@@ -15,11 +15,15 @@ import xml.etree.ElementTree as ET
 from svglib.svglib import svg2rlg
 from reportlab.graphics import renderPM
 
+import svgutils
+import get_tempo
 
-def svg_to_img(file_name):
+
+def svg_to_img(file_name, scale):
     ''' converts a specified svg file to a simplified png file '''
 
     # format input string
+    tempo = ''
     file_name = file_name.strip()
     if file_name[-4:] == '.svg':
         file_name = file_name[:-4]
@@ -39,8 +43,8 @@ def svg_to_img(file_name):
     # crafting a new xml file
     main = ET.Element('svg')
     # setting height and width
-    main.set('width', width)
-    main.set('height', height)
+    main.set('width', str(float(width)*scale))   # scale up by the scale for more clarity
+    main.set('height', str(float(height)*scale))
     main.set('xmlns', 'http://www.w3.org/2000/svg')
 
 
@@ -51,10 +55,16 @@ def svg_to_img(file_name):
 
             # new path
             new_path = ET.SubElement(main, 'path')
-            if className not in ['Note', 'Hook', 'Beam', 'Rest', 'NoteDot', 'Tempo']:
+            if className not in ['Note', 'Hook', 'Beam', 'Rest', 'NoteDot']:
                 new_path.set('stroke-width', ".36")
                 new_path.set('fill', "none")
                 new_path.set('stroke', "#000")
+
+            if className == 'Tempo':
+                tempo = get_tempo.create_tempo(ET, scale, path.get("d"))
+                ET.ElementTree(tempo).write(f'tmp/tempo1.svg')
+
+            new_path.set('transform', f"scale({scale})")
 
             # show names for debuging purposes
             new_path.set('class', className)
@@ -66,18 +76,19 @@ def svg_to_img(file_name):
     # print(ET.tostring(main))
     
     # write to file
-    ET.ElementTree(main).write(f'tmp/{file_name}_1.svg')
+    # ET.ElementTree(main).write(f'tmp/{file_name}.svg')
 
-    drawing = svg2rlg(f'tmp/{file_name}.svg')
-    renderPM.drawToFile(drawing, f'tmp/{file_name}.png', fmt="PNG")
+    # drawing = svg2rlg(f'tmp/{file_name}.svg')
+    # renderPM.drawToFile(drawing, f'tmp/{file_name}.png', fmt="PNG")
 
 
 def main():
     # file name here
     svg_file = 'score_1'
+    scale = 4
 
     # converts svg to png
-    svg_to_img(svg_file)
+    svg_to_img(svg_file, scale)
 
     # Output midi
     # sets track and tempo
