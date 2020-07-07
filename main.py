@@ -63,6 +63,8 @@ def svg_to_img(file_name, scale):
             if className == 'Tempo':
                 tempo = get_tempo.create_tempo(ET, scale, path.get("d"))
                 ET.ElementTree(tempo).write(f'tmp/tempo1.svg')
+                drawing = svg2rlg(f'tmp/tempo1.svg')
+                renderPM.drawToFile(drawing, f'tmp/tempo1.png', fmt="PNG")
 
             new_path.set('transform', f"scale({scale})")
 
