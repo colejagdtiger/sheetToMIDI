@@ -1,5 +1,6 @@
 def create_tempo(ET, scale, path):
-    
+    ''' created tempo '''
+
     # crafting a new xml file
     tempo = ET.Element('svg')
     # setting height and width
@@ -13,3 +14,27 @@ def create_tempo(ET, scale, path):
     new_path.set('d', f'{path}')
 
     return tempo
+
+def vision(file_name):
+    ''' reads number from file '''
+    import cv2
+    import pytesseract
+    import re
+
+    config = ('-l eng --oem 1 --psm 3')
+
+    im = cv2.imread(file_name, cv2.IMREAD_COLOR)
+    text = pytesseract.image_to_string(im, config=config)
+
+    text = re.search('=(.+)', text)
+    
+    if text:
+        text = text.group(1).strip()
+        try:
+            text = int(text)
+        except Exception:
+            return None
+    else:
+        return None
+
+    return text

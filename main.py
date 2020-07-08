@@ -90,7 +90,14 @@ def main():
     scale = 4
 
     # converts svg to png
-    svg_to_img(svg_file, scale)
+    # svg_to_img(svg_file, scale)
+
+    # gets tempo
+    tempo = get_tempo.vision('tmp/tempo1.png')
+
+    # if tempo is not recognition, set default to 
+    if tempo == None:
+        tempo = 90
 
     # Output midi
     # sets track and tempo
@@ -99,7 +106,7 @@ def main():
 
     # get number of tracks by getting a small sliver of the bar lines right beside the time signature
     # and seeing the distance between the 5 bar lines
-    # mid = Midi(1, 170)
+    # mid = Midi(1, tempo)
 
     # set random instrument
     # mid.set_instrument(100)
