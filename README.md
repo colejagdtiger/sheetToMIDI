@@ -10,6 +10,10 @@ svg to a midi converter
 
 * [Midi_interface](https://github.com/Zeyu-Li/Midi_interface) -> Dependencies include [MIDIUtil](https://pypi.org/project/MIDIUtil/)
 * [svglib](https://pypi.org/project/svglib/)
+* [svgutils](https://pypi.org/project/svgutils/)
+* [cv2](https://pypi.org/project/opencv-python/)
+* [numpy](https://pypi.org/project/numpy/)
+* [matplotlib](https://pypi.org/project/matplotlib/)
 
 
 
