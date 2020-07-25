@@ -24,6 +24,7 @@ def svg_to_img(file_name, scale):
 
     # format input string
     tempo = ''
+    tracks = 1
     file_name = file_name.strip()
     if file_name[-4:] == '.svg':
         file_name = file_name[:-4]
@@ -52,7 +53,6 @@ def svg_to_img(file_name, scale):
     for path in tree.getroot():
         className = path.get('class')
         if className not in remove_classes:
-
             # new path
             new_path = ET.SubElement(main, 'path')
             if className not in ['Note', 'Hook', 'Beam', 'Rest', 'NoteDot']:
@@ -73,6 +73,32 @@ def svg_to_img(file_name, scale):
             
             # sets path
             new_path.set('d', f'{path.get("d")}')
+        elif className == 'StaffLines':
+            # gets number of tracks
+            vector = path.get("d")
+            vector = vector[1:]
+            lines = vector.split('M')
+
+            # gets number of tracks
+            y_coords = []
+            distance_space = []
+            for line_number, line in enumerate(lines):
+                if (line_number + 1) % 5 != 0:
+                    continue
+                coordx, coordy = line.split('h')
+                y_coords.append(coordy)
+                if len(y_coords) >= 2:
+                    distance = float(y_coords[len(y_coords)-1]) - float(y_coords[len(y_coords)-2])
+                    distance_space.append(distance)
+                if len(distance_space) >= 2:
+                    # test if all distances are the same
+                    # if they are not all the same, get the length
+                    if not all(distance_space):
+                        # returns the number of lines with same lengths
+                        tracks = len(y_coords) - 1
+                        break
+                    # if all the lengths are the same, then there must my 1 main track, which is the default
+
 
     # print final product
     # print(ET.tostring(main))
@@ -83,14 +109,20 @@ def svg_to_img(file_name, scale):
     # drawing = svg2rlg(f'tmp/{file_name}.svg')
     # renderPM.drawToFile(drawing, f'tmp/{file_name}.png', fmt="PNG")
 
+    return tracks
+
 
 def main():
     # file name here
     svg_file = 'score_1'
     scale = 4
 
-    # converts svg to png
-    # svg_to_img(svg_file, scale)
+    # converts svg to png + get number of tracks
+    tracks_number = svg_to_img(svg_file, scale)
+
+    # debug number of tracks
+    # print(tracks_number)
+    # return
 
     # gets tempo
     tempo = get_tempo.vision('tmp/tempo1.png')
@@ -106,7 +138,7 @@ def main():
 
     # get number of tracks by getting a small sliver of the bar lines right beside the time signature
     # and seeing the distance between the 5 bar lines
-    # mid = Midi(1, tempo)
+    # mid = Midi(tracks_number, tempo)
 
     # set random instrument
     # mid.set_instrument(100)
