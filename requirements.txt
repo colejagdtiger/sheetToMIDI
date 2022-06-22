@@ -2,5 +2,5 @@ svglib==1.0.0
 MIDIUtil==1.2.1
 svgutils==0.3.1
 opencv-python==4.3.0.36
-numpy==1.19.0
+numpy==1.22.0
 matplotlib==3.2.2
